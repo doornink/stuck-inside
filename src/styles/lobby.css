@@ -1,0 +1,18 @@
+.lobby-top {
+  width: 100%;
+  text-align: center;
+}
+
+.lobby-top button {
+  margin-top: var(--space);
+}
+
+.lobby .games-list {
+  margin-top: var(--space);
+  width: 100%;
+  overflow: hidden;
+}
+
+.lobby .games-list h2 {
+  margin-left: var(--space-small);
+}

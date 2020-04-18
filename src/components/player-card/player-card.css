@@ -1,0 +1,80 @@
+.player-card {
+  overflow: hidden;
+  width: 200px;
+  padding: var(--space-xsmall);
+  height: auto;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.2); */
+}
+
+.player-card.-clear {
+  background: none;
+  box-shadow: none;
+}
+
+.player-card.-reversed {
+  text-align: right;
+  float: right;
+}
+
+.player-card.-reversed .name {
+  text-align: right;
+  padding-left: 0;
+  padding-right: var(--space-small);
+}
+
+.player-card.-reversed .image {
+  float: right;
+}
+
+.player-card.-small {
+  width: 160px;
+  padding: calc(var(--space-xsmall) / 2);
+}
+
+.player-card.current-turn {
+  background: var(--color-brand);
+}
+
+.player-card .name {
+  height: 40px;
+  width: calc(100% - 40px);
+  line-height: 40px;
+  overflow: hidden;
+  float: left;
+  padding-left: var(--space-small);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-card.-small .name {
+  height: 30px;
+  line-height: 30px;
+  width: 120px;
+}
+
+.player-card.-small .name {
+  font-size: var(--font-size-small);
+}
+
+.image {
+  float: left;
+  display: block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 100%;
+  background-color: #fff;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+}
+
+.player-card.-small .image,
+.player-card.-small img {
+  width: 30px;
+  height: 30px;
+}

@@ -1,0 +1,80 @@
+.game-board {
+  width: 100%;
+}
+
+.game-board .team-1,
+.game-board .team-2 {
+  width: 30%;
+  float: left;
+  padding: 20px;
+}
+
+.game-board .board-main {
+  width: 40%;
+  float: left;
+  text-align: center;
+}
+
+.game-board .team-2 {
+  text-align: right;
+}
+
+.game-board .team-name {
+  width: 200px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 80px;
+}
+.game-board .team-2 .team-name {
+  float: right;
+}
+
+.game-board .team-score {
+  width: 200px;
+  text-align: center;
+  font-size: 80px;
+  line-height: 80px;
+}
+.game-board .team-2 .team-score {
+  float: right;
+}
+
+.game-board .player-card {
+  margin-top: var(--space-small);
+}
+
+.game-board .on-the-clock {
+  margin-top: var(--space-large);
+}
+
+.game-board .clue {
+  margin-top: 50px;
+}
+
+.game-board .clue h1 {
+  width: 100%;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 60px;
+  margin: 0;
+  padding: 5px 30px;
+  color: var(--color-text-clue);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.dark-mode-colors .game-board .clue h1 {
+  color: var(--color-text-clue-dark-mode);
+  border-color: var(--color-border-dark-mode);
+}
+
+.game-board button {
+  margin-top: var(--space-large);
+  width: 100%;
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.game-board button:hover {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+}

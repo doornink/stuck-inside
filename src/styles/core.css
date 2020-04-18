@@ -1,0 +1,110 @@
+:root {
+  --color-primary-darkest: #222;
+  --color-primary-dark: #393939;
+  --color-primary: #888;
+  --color-primary-light: #ccc;
+  --color-primary-lightest: #eee;
+  --color-secondary: #edfdde;
+  --color-white: #ffffff;
+  --color-cloudy: #fbfaf9;
+  --color-overcast: #dfdfe1;
+
+  --ds-blue: #0d97ff; /* blue */
+  --ds-blue-highlight: #0d82e4;
+  --color-dark-mode-dark: #bd322d;
+  --color-dark-mode-darkest: #261616;
+  --color-dark-mode: #ef3f3a; /* red */
+  --ds-orion-highlight: #da283a;
+  --color-brand: #00aa55; /* green */
+  --ds-ursa-highlight: #00954a;
+  --ds-selective-yellow: #ffba00; /* **DEPRECATED** yellow */
+  --ds-light-blue: #eaf8ff; /* **DEPRECATED** light blue punched up */
+
+  --color-bg: #ffffff;
+  --color-text-primary: var(--color-primary-darkest);
+  --color-text-clue: var(--white);
+
+  --color-bg-dark-mode: var(--color-primary-darkest);
+  --color-text-dark-mode: var(--color-primary-lightest);
+  --color-text-clue-dark-mode: var(--color-primary-lightest);
+
+  --color-button-bg: var(--color-primary-darkest);
+  --color-button-bg-hover: var(--color-primary-darkest);
+  --color-button-text: var(--color-primary-darkest);
+  --color-button-text-hover: var(--color-white);
+
+  --color-border: var(--color-primary-darkest);
+  --color-border-dark-mode: var(--color-cloudy);
+
+  --space: 16px;
+  --space-xsmall: 4px;
+  --space-small: 8px;
+  --space-large: 32px;
+  --space-xlarge: 48px;
+
+  --font-size-xsmall: 10px;
+  --font-size-small: 12px;
+  --font-size-medium: 16px;
+  --font-size-large: 22px;
+  --font-size-xlarge: 28px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--font-size-xlarge);
+}
+
+h2 {
+  font-size: var(--font-size-large);
+}
+
+h3,
+p {
+  font-size: var(--font-size-medium);
+}
+
+h4 {
+  font-size: var(--font-size-small);
+}
+
+h5,
+h6 {
+  font-size: var(--font-size-xsmall);
+}
+
+html {
+  background-color: var(--color-bg);
+}
+
+a {
+  color: var(--color-primary-dark);
+}
+
+button {
+  cursor: pointer;
+  padding: var(--space) var(--space-xlarge);
+  border: 3px solid var(--color-button-bg);
+  color: var(--color-button-text);
+  border-radius: 4px;
+  background: white;
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: var(--color-button-bg-hover);
+  color: var(--color-button-text-hover);
+}
+
+button:disabled {
+  background-color: var(--color-overcast);
+  color: var(--color-primary);
+}
