@@ -13,7 +13,7 @@ export default function LoggedInLayout({
   return (
     <div className={`main ${showAlternateColors ? 'dark-mode-colors' : ''}`}>
       <header>
-        <div className="title">Catchprase Yo!</div>
+        <div className="title">Catchphrase Yo!</div>
         <div className="username">
           <PlayerCard player={user} clear reversed />
         </div>

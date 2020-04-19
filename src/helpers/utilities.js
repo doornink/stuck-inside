@@ -64,13 +64,15 @@ const getTalker = (team, gameData) => {
 };
 
 export const shouldShowClue = (gameData, user) => {
-  const { currentTalker, team1, team2 } = gameData;
+  const { betweenRounds, currentTalker, team1, team2 } = gameData;
 
   const isUserOnTeam1 = team1.players.find((player) => player.uid === user.uid);
   const isUserOnTeam2 = team2.players.find((player) => player.uid === user.uid);
   const isUserCurrentTalker = currentTalker.talker.uid === user.uid;
 
-  if (isUserCurrentTalker) {
+  if (betweenRounds) {
+    return false;
+  } else if (isUserCurrentTalker) {
     return true;
   } else if (currentTalker.team === 'team1' && isUserOnTeam2) {
     return true;
@@ -80,4 +82,13 @@ export const shouldShowClue = (gameData, user) => {
 
   // hide the clue if your team is up and you aren’t the currentTalker
   return false;
+};
+
+export const getRoundWinner = (gameData) => {
+  // The team whose turn it is when the buzzer sounds loses the round
+  return gameData.currentTalker.team === 'team1' ? 'team2' : 'team1';
+};
+
+export const getGameWinner = (gameData) => {
+  return gameData.team1.score >= 7 ? 'team1' : 'team2';
 };

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { GAME_STATUSES } from '../../helpers/constants';
 
 import './player-card.css';
 

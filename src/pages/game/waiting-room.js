@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
-import { auth, db } from '../../services/firebase';
 import { GAME_STATUSES } from '../../helpers/constants';
-import { shufflePlayersIntoTeams, setTimer } from '../../helpers/utilities';
+import { shufflePlayersIntoTeams } from '../../helpers/utilities';
 
 import { shuffleWords, ALL_WORDS } from '../../helpers/word-lists';
 import LoggedInLayout from '../../components/logged-in-layout';
 
 export default function WaitingRoom({ gameData, updateGameData }) {
-  const user = auth().currentUser;
-
   const startGame = () => {
     const [team1, team2] = shufflePlayersIntoTeams(gameData.players);
     const wordList = shuffleWords(ALL_WORDS);
@@ -23,7 +19,7 @@ export default function WaitingRoom({ gameData, updateGameData }) {
       currentTalker: { team: 'team1', talker: team1[0] },
       currentTurn: 0,
       currentRound: 1,
-      timer: setTimer(),
+      betweenRounds: true,
       wordList,
     };
 

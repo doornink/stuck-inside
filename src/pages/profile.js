@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { auth, db } from '../services/firebase';
+import { auth } from '../services/firebase';
 
 export default function Profile() {
   const user = auth().currentUser;
@@ -27,8 +27,6 @@ export default function Profile() {
   const handleChangeNameClick = (event) => {
     setDisplayName(null);
   };
-
-  const handleStartPlayingButton = (event) => {};
 
   return (
     <div className="main">

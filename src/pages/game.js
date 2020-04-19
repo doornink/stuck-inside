@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { auth, db } from '../services/firebase';
+import { db } from '../services/firebase';
 import { GAME_STATUSES } from '../helpers/constants';
 
 import WaitingRoom from './game/waiting-room';
 import GameBoard from './game/board';
+import GameOver from './game/game-over';
 
 export default function Game() {
   const { id } = useParams();
 
-  const user = auth().currentUser;
   const [readError, setReadError] = useState(null);
   const [writeError, setWriteError] = useState(null);
   const [gameData, setGameData] = useState(null);
@@ -55,6 +55,12 @@ export default function Game() {
 
           {gameData.status === GAME_STATUSES.IN_PROGRESS && (
             <GameBoard
+              betweenRounds={gameData.betweenRounds}
+              currentRound={gameData.currentRound}
+              currentTalker={gameData.currentTalker}
+              currentTurn={gameData.currentTurn}
+              currentWord={gameData.currentWord}
+              timerLength={gameData.timer}
               error={readError || writeError}
               gameData={gameData}
               updateGameData={updateGameData}
@@ -62,7 +68,7 @@ export default function Game() {
           )}
 
           {gameData.status === GAME_STATUSES.DONE && (
-            <div>{gameData.status}</div>
+            <GameOver gameData={gameData} />
           )}
 
           {gameData.status === GAME_STATUSES.CLOSED && (

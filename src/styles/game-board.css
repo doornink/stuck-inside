@@ -43,6 +43,10 @@
   margin-top: var(--space-small);
 }
 
+.game-board .first-to-7 {
+  font-size: var(--font-size-xsmall);
+}
+
 .game-board .on-the-clock {
   margin-top: var(--space-large);
 }
@@ -77,4 +81,8 @@
 .game-board button:hover {
   background-color: var(--color-brand);
   color: var(--color-white);
+}
+
+.game-over-screen {
+  text-align: center;
 }
