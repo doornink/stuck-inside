@@ -10,10 +10,7 @@
   --color-overcast: #dfdfe1;
 
   --ds-blue: #0d97ff; /* blue */
-  --ds-blue-highlight: #0d82e4;
-  --color-dark-mode-dark: #bd322d;
-  --color-dark-mode-darkest: #261616;
-  --color-dark-mode: #ef3f3a; /* red */
+
   --ds-orion-highlight: #da283a;
   --color-brand: #00aa55; /* green */
   --ds-ursa-highlight: #00954a;
@@ -24,9 +21,13 @@
   --color-text-primary: var(--color-primary-darkest);
   --color-text-clue: var(--white);
 
-  --color-bg-dark-mode: var(--color-primary-darkest);
-  --color-text-dark-mode: var(--color-primary-lightest);
-  --color-text-clue-dark-mode: var(--color-primary-lightest);
+  --color-bg-dark-theme: var(--color-primary-darkest);
+  --color-text-dark-theme: var(--color-primary-lightest);
+  --color-text-clue-dark-theme: var(--color-primary-lightest);
+
+  --color-bg-green-theme: var(--color-brand);
+  --color-text-green-theme: var(--color-white);
+  --color-text-clue-green-theme: var(--color-white);
 
   --color-button-bg: var(--color-primary-darkest);
   --color-button-bg-hover: var(--color-primary-darkest);
@@ -34,7 +35,7 @@
   --color-button-text-hover: var(--color-white);
 
   --color-border: var(--color-primary-darkest);
-  --color-border-dark-mode: var(--color-cloudy);
+  --color-border-dark-theme: var(--color-cloudy);
 
   --space: 16px;
   --space-xsmall: 4px;
@@ -88,23 +89,33 @@ a {
   color: var(--color-primary-dark);
 }
 
-button {
-  cursor: pointer;
-  padding: var(--space) var(--space-xlarge);
-  border: 3px solid var(--color-button-bg);
-  color: var(--color-button-text);
-  border-radius: 4px;
-  background: white;
-  font-size: var(--font-size-medium);
-  font-weight: 600;
+.space {
+  margin-top: var(--space);
 }
 
-button:hover {
-  background-color: var(--color-button-bg-hover);
-  color: var(--color-button-text-hover);
+.space-large {
+  margin-top: var(--space-large);
 }
 
-button:disabled {
-  background-color: var(--color-overcast);
-  color: var(--color-primary);
+.space-xlarge {
+  margin-top: var(--space-xlarge);
+}
+
+.space-small {
+  margin-top: var(--space-small);
+}
+
+.space-xsmall {
+  margin-top: var(--space-xsmall);
+}
+
+input {
+  text-align: center;
+  border: none;
+  display: block;
+  border-bottom: 2px solid black;
+  font-size: var(--font-size-large);
+  font-weight: 500;
+
+  margin: var(--space-large) auto var(--space);
 }

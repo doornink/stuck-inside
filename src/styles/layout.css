@@ -6,9 +6,14 @@
   color: var(--color-text-primary);
 }
 
-.main.dark-mode-colors {
-  background-color: var(--color-bg-dark-mode);
-  color: var(--color-text-dark-mode);
+.main.dark-theme {
+  background-color: var(--color-bg-dark-theme);
+  color: var(--color-text-dark-theme);
+}
+
+.main.green-theme {
+  background-color: var(--color-bg-green-theme);
+  color: var(--color-text-green-theme);
 }
 
 .main-content {
@@ -27,16 +32,22 @@ header {
   background-color: rgba(255, 255, 255, 0.95);
 }
 
-.main.dark-mode-colors header {
+.main.dark-theme header {
   background-color: rgba(34, 34, 34, 0.95);
 }
 
-header .title {
-  color: var(--color-brand);
+.main.green-theme header {
+  background-color: rgba(0, 170, 85, 0.95);
+}
+
+header .logo {
   float: left;
-  font-size: 30px;
   line-height: var(--space-xlarge);
   padding-left: var(--space);
+}
+
+.main.green-theme header .logo {
+  color: white;
 }
 
 header .username {

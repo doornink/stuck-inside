@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import './lobby.css';
 
-import { auth, db } from '../services/firebase';
+import { auth, db } from '../../services/firebase';
 
-import { GAME_STATUSES } from '../helpers/constants';
+import { GAME_STATUSES } from '../../helpers/constants';
 
-import GamePreview from '../components/game-preview/game-preview';
-import LoggedInLayout from '../components/logged-in-layout';
+import GamePreview from '../../components/game-preview/game-preview';
+import LoggedInLayout from '../../components/logged-in-layout';
+import Button from '../../components/button/button';
 
 export default function Profile() {
   const history = useHistory();
@@ -20,7 +22,6 @@ export default function Profile() {
       db.ref('games').on('value', (snapshot) => {
         let games = [];
         snapshot.forEach((game) => {
-          console.log(game);
           games.push({ ...game.val(), key: game.key });
         });
         setGames(games);
@@ -41,7 +42,7 @@ export default function Profile() {
   const createNewGame = async () => {
     setWriteError(null);
     var newGameKey = db.ref('games').push().key;
-    console.log(newGameKey);
+
     try {
       await db.ref(`/games/${newGameKey}`).set({
         players: [getPlayerObject()],
@@ -57,9 +58,10 @@ export default function Profile() {
 
   const onJoinGameClick = async (game) => {
     setWriteError(null);
-    console.log(game.key);
+
+    // TODO - double check that player isn't already in the list
     const players = game.players.concat([getPlayerObject()]);
-    console.log(players);
+
     try {
       await db.ref(`/games/${game.key}`).set({
         ...game,
@@ -80,14 +82,11 @@ export default function Profile() {
     (game) => game.status === GAME_STATUSES.IN_PROGRESS
   );
 
-  console.log(games);
   return (
     <LoggedInLayout title="Lobby" error={readError || writeError}>
-      <div class="lobby">
+      <div className="lobby">
         <div className="lobby-top">
-          <button className="new-game-button" onClick={() => createNewGame()}>
-            New Game
-          </button>
+          <Button onClick={() => createNewGame()}>New Game</Button>
         </div>
         {gamesWaitingToStart.length > 0 && (
           <div className="games-list starting-games">
@@ -107,12 +106,7 @@ export default function Profile() {
           <div className="games-list in-progress-games">
             <h2>Games in progress</h2>
             {gamesInProgress.map((game) => {
-              return (
-                <GamePreview
-                  game={game}
-                  handleJoinGameClick={onJoinGameClick}
-                />
-              );
+              return <GamePreview game={game} />;
             })}
           </div>
         )}

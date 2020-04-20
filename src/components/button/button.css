@@ -1,0 +1,27 @@
+button.button {
+  cursor: pointer;
+  padding: var(--space) var(--space-xlarge);
+  border: 3px solid var(--color-button-bg);
+  color: var(--color-button-text);
+  border-radius: 4px;
+  background: white;
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+}
+
+button.button:hover {
+  background-color: var(--color-button-bg-hover);
+  color: var(--color-button-text-hover);
+}
+
+button.button:disabled {
+  cursor: default;
+  border-color: var(--color-primary-light);
+  color: var(--color-primary-light);
+}
+
+button.button:disabled:hover {
+  border-color: var(--color-primary-light);
+  color: var(--color-primary-light);
+  background-color: white;
+}

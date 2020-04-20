@@ -1,0 +1,15 @@
+.profile {
+  text-align: center;
+}
+
+.profile .name-section {
+  margin-top: var(--space-large);
+}
+
+.profile .name-section button {
+  margin-top: var(--space);
+}
+
+.profile input {
+  width: 200px;
+}

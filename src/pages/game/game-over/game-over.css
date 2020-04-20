@@ -1,0 +1,16 @@
+.game-over {
+  text-align: center;
+}
+
+.game-over .player-list {
+  margin-top: var(--space);
+  display: inline-block;
+}
+
+.game-over .player-list .player-card {
+  margin-top: var(--space-small);
+}
+
+.game-over .button {
+  margin-top: var(--space-xlarge);
+}

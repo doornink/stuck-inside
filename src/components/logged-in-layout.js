@@ -1,21 +1,42 @@
 import React from 'react';
 import { auth } from '../services/firebase';
 import PlayerCard from './player-card/player-card';
+import { useHistory } from 'react-router-dom';
+import Logo from './logo/logo';
 
 export default function LoggedInLayout({
   children,
   error,
   title,
   showAlternateColors,
+  colorTheme,
 }) {
   const user = auth().currentUser;
+  const history = useHistory();
+
+  const handleProfileClick = () => {
+    history.push('/profile');
+  };
+
+  if (!colorTheme) {
+    colorTheme = 'regular';
+  }
 
   return (
-    <div className={`main ${showAlternateColors ? 'dark-mode-colors' : ''}`}>
+    <div
+      className={`main ${colorTheme}-theme ${
+        showAlternateColors ? 'dark-theme' : ''
+      }`}
+    >
       <header>
-        <div className="title">Catchphrase Yo!</div>
+        <Logo />
         <div className="username">
-          <PlayerCard player={user} clear reversed />
+          <PlayerCard
+            onClick={handleProfileClick}
+            player={user}
+            clear
+            reversed
+          />
         </div>
       </header>
       <div className="main-content">

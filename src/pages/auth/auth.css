@@ -1,0 +1,19 @@
+.auth {
+  margin-top: var(--space-xlarge);
+  text-align: center;
+}
+
+.email-toggle,
+form {
+  margin-top: var(--space-xlarge);
+}
+
+.email-toggle {
+  color: var(--color-primary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth input {
+  width: 350px;
+}

@@ -1,7 +1,7 @@
 .game-preview {
   float: left;
   width: calc(33.3% - (var(--space-small) * 2));
-  height: 300px;
+  height: 350px;
   background: var(--color-primary-darkest);
   color: var(--color-primary-lightest);
   overflow: hidden;
@@ -12,7 +12,9 @@
 
 .game-preview .players-list {
   width: 100%;
-  margin-top: var(--space-small);
+  height: 200px;
+  margin-top: var(--space);
+  overflow: hidden;
 }
 
 .game-preview .players-list > div {
@@ -23,6 +25,16 @@
   margin-top: var(--space-small);
   width: calc(100% - (var(--space-small) * 2));
   width: 100%;
+}
+
+.game-preview .status-message {
+  font-weight: 500;
+}
+
+.game-preview .and-more {
+  display: block;
+  font-weight: 800;
+  font-size: var(--font-size-small);
 }
 
 .game-preview a {

@@ -8,30 +8,38 @@ export default function PlayerCard({
   size,
   clear,
   reversed,
+  onClick,
+  highlighted,
 }) {
-  const isPlayersTurn =
-    gameData && gameData.currentTalker.talker.uid === player.uid;
+  const clickable = !!onClick;
 
   return (
     <div
+      role={clickable ? 'button' : 'presentation'}
+      onClick={clickable ? onClick : () => {}}
       key={player.uid}
       className={`player-card 
-        ${isPlayersTurn ? 'current-turn' : ''} 
+        ${highlighted ? 'highlighted' : ''} 
         ${size === 'small' ? '-small' : ''} 
         ${clear ? '-clear' : ''}
+        ${clickable ? '-clickable' : ''}
         ${reversed ? '-reversed' : ''}`}
     >
       {reversed ? (
         <React.Fragment>
           <h3 className="name">{player.displayName}</h3>
           <div className="image">
-            <img src={player.photoURL} alt={player.displayName} />
+            {player.photoURL && (
+              <img src={player.photoURL} alt={player.displayName} />
+            )}
           </div>
         </React.Fragment>
       ) : (
         <React.Fragment>
           <div className="image">
-            <img src={player.photoURL} alt={player.displayName} />
+            {player.photoURL && (
+              <img src={player.photoURL} alt={player.displayName} />
+            )}
           </div>
           <h3 className="name">{player.displayName}</h3>
         </React.Fragment>

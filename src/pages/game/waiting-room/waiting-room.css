@@ -1,0 +1,22 @@
+.waiting-room {
+  text-align: center;
+}
+
+.waiting-room .player-list {
+  margin-top: var(--space);
+  display: inline-block;
+}
+
+.waiting-room .player-list .player-card {
+  margin-top: var(--space-small);
+}
+
+.waiting-room .button-message {
+  margin-top: var(--space-xlarge);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+}
+
+.waiting-room .button {
+  margin-top: var(--space);
+}

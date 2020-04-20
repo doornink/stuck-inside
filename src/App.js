@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import Profile from './pages/profile';
-import Lobby from './pages/lobby';
-import Signup from './pages/signup';
-import Login from './pages/login';
-import Game from './pages/game';
+import Profile from './pages/profile/profile';
+import Lobby from './pages/lobby/lobby';
+import Signup from './pages/auth/signup';
+import Login from './pages/auth/login';
+import Game from './pages/game/game';
 import { auth } from './services/firebase';
 import PrivateRoute from './helpers/private-route';
 import PublicRoute from './helpers/public-route';
+import Loader from './components/loader/loader';
 
 class App extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class App extends Component {
 
   render() {
     return this.state.loading === true ? (
-      <h2>Loading...</h2>
+      <Loader />
     ) : (
       <Router>
         <Switch>

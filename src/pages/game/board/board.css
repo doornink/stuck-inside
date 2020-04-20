@@ -66,9 +66,14 @@
   border-bottom: 2px solid var(--color-border);
 }
 
-.dark-mode-colors .game-board .clue h1 {
-  color: var(--color-text-clue-dark-mode);
-  border-color: var(--color-border-dark-mode);
+.dark-theme .game-board .clue h1 {
+  color: var(--color-text-clue-dark-theme);
+  border-color: var(--color-border-dark-theme);
+}
+
+.green-theme .game-board .clue h1 {
+  color: var(--color-text-clue-green-theme);
+  border-color: var(--color-border-green-theme);
 }
 
 .game-board button {
@@ -78,11 +83,18 @@
   color: var(--color-brand);
 }
 
+.green-theme .game-board button {
+  border-color: white;
+  background-color: var(--color-brand);
+  color: white;
+}
+.green-theme .game-board button:hover {
+  border-color: white;
+  background-color: white;
+  color: var(--color-brand);
+}
+
 .game-board button:hover {
   background-color: var(--color-brand);
   color: var(--color-white);
-}
-
-.game-over-screen {
-  text-align: center;
 }

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { db } from '../services/firebase';
-import { GAME_STATUSES } from '../helpers/constants';
+import { db } from '../../services/firebase';
+import { GAME_STATUSES } from '../../helpers/constants';
 
-import WaitingRoom from './game/waiting-room';
-import GameBoard from './game/board';
-import GameOver from './game/game-over';
+import WaitingRoom from './waiting-room/waiting-room';
+import GameBoard from './board/board';
+import GameOver from './game-over/game-over';
 
 export default function Game() {
   const { id } = useParams();
@@ -26,7 +26,7 @@ export default function Game() {
   }, [id]);
 
   const updateGameData = async (updatedGameData) => {
-    console.log(updatedGameData);
+    // console.log(updatedGameData);
 
     setWriteError(null);
     try {
@@ -38,8 +38,6 @@ export default function Game() {
       setWriteError(error.message);
     }
   };
-
-  console.log(gameData && gameData.status);
 
   return (
     <div>
