@@ -13,3 +13,15 @@
 .profile input {
   width: 200px;
 }
+
+.profile .webcam-video-container {
+  border-radius: 100%;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin: var(--space-large) auto var(--space);
+}
+
+.profile .webcam-video {
+  transform: scaleX(-1) translateX(80px);
+}
