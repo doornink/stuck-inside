@@ -15,6 +15,7 @@ import { GAME_STATUSES } from '../../../helpers/constants';
 import Button from '../../../components/button/button';
 import TimerWrapper from '../../../components/timer-wrapper/timer-wrapper';
 import ChallengeModal from '../../../components/challenge-modal/challenge-modal';
+import Score from '../../../components/score/score';
 
 export default class GameBoard extends Component {
   state = {
@@ -189,7 +190,7 @@ export default class GameBoard extends Component {
             }`}
           >
             <div className="team-1">
-              <div className="team-score">{gameData.team1.score}</div>
+              <Score score={gameData.team1.score} />
               <div className="team-name">Team 1</div>
               {gameData.team1.players.map((player) => {
                 return (
@@ -286,7 +287,7 @@ export default class GameBoard extends Component {
             </div>
 
             <div className="team-2">
-              <div className="team-score">{gameData.team2.score}</div>
+              <Score score={gameData.team2.score} />
               <div className="team-name">Team 2</div>
               {gameData.team2.players.map((player) => {
                 return (

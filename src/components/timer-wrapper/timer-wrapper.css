@@ -19,15 +19,19 @@
   animation: blinkingText 0.5s infinite;
 }
 
+.timer-wrapper.stage-4 {
+  animation: blinkingText 0.2s infinite;
+}
+
 @keyframes blinkingText {
   0% {
     background-color: rgba(255, 255, 255, 0);
   }
   49% {
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: rgba(255, 255, 255, 0.16);
   }
   60% {
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: rgba(255, 255, 255, 0.16);
   }
   99% {
     background-color: rgba(255, 255, 255, 0);

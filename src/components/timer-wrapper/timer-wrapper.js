@@ -3,21 +3,25 @@ import React, { useEffect, useState } from 'react';
 import './timer-wrapper.css';
 
 export default function TimerWrapper(props) {
-  const { timeLeft, timerLength } = props;
+  const { timeLeft, timerLength, betweenRounds, challengeInProgress } = props;
 
   const [stageOnePercentage, setStageOnePercentage] = useState();
   const [stageTwoPercentage, setStageTwoPercentage] = useState();
   const [stageThreePercentage, setStageThreePercentage] = useState();
+  const [stageFourPercentage, setStageFourPercentage] = useState();
 
   useEffect(() => {
     setStageOnePercentage(0.5 + Math.random() * 0.2); // 50-70%
-    setStageTwoPercentage(0.2 + Math.random() * 0.2); // 20-40%
-    setStageThreePercentage(0.05 + Math.random() * 0.1); // 5-15%
+    setStageTwoPercentage(0.3 + Math.random() * 0.15); // 30-45%
+    setStageThreePercentage(0.15 + Math.random() * 0.1); // 15-25%
+    setStageFourPercentage(0.05 + Math.random() * 0.05); // 5-10%
   }, [timerLength]);
 
   let stageClass = '';
-  if (timeLeft < 1) {
+  if (timeLeft < 1 || betweenRounds || !!challengeInProgress) {
     stageClass = '';
+  } else if (timeLeft < timerLength * stageFourPercentage) {
+    stageClass = 'stage-4';
   } else if (timeLeft < timerLength * stageThreePercentage) {
     stageClass = 'stage-3';
   } else if (timeLeft < timerLength * stageTwoPercentage) {

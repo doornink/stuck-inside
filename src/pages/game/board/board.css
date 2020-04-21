@@ -29,12 +29,6 @@
   float: right;
 }
 
-.game-board .team-score {
-  width: 200px;
-  text-align: center;
-  font-size: 80px;
-  line-height: 80px;
-}
 .game-board .team-2 .team-score {
   float: right;
 }
