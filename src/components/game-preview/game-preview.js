@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import { GAME_STATUSES } from '../../helpers/constants';
 import PlayerCard from '../player-card/player-card';
 import './game-preview.css';
@@ -28,7 +29,8 @@ export default function GamePreview({ game, handleJoinGameClick }) {
 
   return (
     <div className="game-preview">
-      <h3>{game.players[0].displayName}’s New Game</h3>
+      <h3>{game.players[0].displayName}’s new game</h3>
+      <h5>Created {moment(game.timestamp).fromNow()}</h5>
 
       <div className="players-list">
         {game.players.slice(0, 4).map((player) => {
@@ -36,7 +38,9 @@ export default function GamePreview({ game, handleJoinGameClick }) {
         })}
 
         {game.players.length > 4 && (
-          <div className="and-more">...and {game.players.length - 4} more</div>
+          <div className="space">
+            <h5 className="and-more">+ {game.players.length - 4} more</h5>
+          </div>
         )}
       </div>
 

@@ -58,7 +58,7 @@ export default class SignUp extends Component {
             className="email-toggle"
             onClick={() => this.setState({ showForm: true })}
           >
-            Or create an account using your email addres
+            Or create an account using your email address
           </div>
         )}
 
