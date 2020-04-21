@@ -58,6 +58,7 @@ export default function Game() {
               currentTalker={gameData.currentTalker}
               currentTurn={gameData.currentTurn}
               currentWord={gameData.currentWord}
+              challengeInProgress={gameData.challengeInProgress}
               timerLength={gameData.timer}
               error={readError || writeError}
               gameData={gameData}

@@ -7,12 +7,14 @@ import {
   nextTurn,
   setTimer,
   getRoundWinner,
+  canUserChallenge,
 } from '../../../helpers/utilities';
 import PlayerCard from '../../../components/player-card/player-card';
 import LoggedInLayout from '../../../components/logged-in-layout';
 import { GAME_STATUSES } from '../../../helpers/constants';
 import Button from '../../../components/button/button';
 import TimerWrapper from '../../../components/timer-wrapper/timer-wrapper';
+import ChallengeModal from '../../../components/challenge-modal/challenge-modal';
 
 export default class GameBoard extends Component {
   state = {
@@ -24,7 +26,11 @@ export default class GameBoard extends Component {
 
   componentWillMount() {
     document.addEventListener('keydown', this.handleUserKeyPress, false);
-    if (this.props.timerLength && !this.props.betweenRounds) {
+    if (
+      this.props.timerLength &&
+      !this.props.betweenRounds &&
+      !this.props.challengeInProgress
+    ) {
       this.setState({ timeLeft: this.props.timerLength }, () => {
         this.tickTimer();
       });
@@ -49,6 +55,14 @@ export default class GameBoard extends Component {
         isUserCurrentTalker:
           this.state.user.uid === nextProps.currentTalker.talker.uid,
       });
+    }
+
+    if (!this.props.challengeInProgress && nextProps.challengeInProgress) {
+      clearTimeout(this.timerTimeout);
+    }
+
+    if (this.props.challengeInProgress && !nextProps.challengeInProgress) {
+      this.tickTimer(true);
     }
   }
 
@@ -83,6 +97,7 @@ export default class GameBoard extends Component {
 
     const updatedGameData = {
       ...gameData,
+      challengeInProgress: null,
       currentTalker: nextTurn(gameData),
       currentTurn: newCurrentTurn,
       currentRound: newCurrentRound,
@@ -115,18 +130,41 @@ export default class GameBoard extends Component {
     if (event.keyCode === 32) {
       if (this.state.isUserCurrentTalker) {
         this.transitionToNextTurn();
+      } else if (canUserChallenge(this.props.gameData, this.state.user)) {
+        this.challengeTheTurn(this.state.user.displayName);
       }
+
       // if on other team, start a challenge
       // pause timeLeft countdowns on all platforms by setting a pause param in firebase
     }
   };
 
-  tickTimer = () => {
+  challengeTheTurn = (challenger) => {
+    const { gameData, updateGameData } = this.props;
+
+    const updatedGameData = {
+      ...gameData,
+      challengeInProgress: {
+        challenger,
+        accepts: [],
+        ignores: [],
+        unanswered: gameData.players,
+      },
+    };
+
+    updateGameData(updatedGameData);
+  };
+
+  timerTimeout = null;
+  tickTimer = (overrideChallenge = false) => {
+    if (this.props.challengeInProgress && !overrideChallenge) {
+      return;
+    }
     const { timeLeft } = this.state;
     if (timeLeft === 0) {
       this.transitionToNextRound();
     } else if (!this.props.gameData.betweenRounds) {
-      setTimeout(() => {
+      this.timerTimeout = setTimeout(() => {
         this.setState({ timeLeft: timeLeft - 1 });
         this.tickTimer();
       }, 1000);
@@ -138,9 +176,6 @@ export default class GameBoard extends Component {
     const { isUserCurrentTalker, user } = this.state;
 
     const showTheClue = shouldShowClue(gameData, user);
-
-    // build a wrapper that does cool css shit when the timer is getting low
-    // add in randomness so its not clear when the timer weill run out
 
     return (
       <React.Fragment>
@@ -218,10 +253,21 @@ export default class GameBoard extends Component {
                         </h1>
                       </div>
                       {showTheClue ? (
-                        <div className="clue">
-                          <h3>The phrase is</h3>
-                          <h1>{gameData.currentWord}</h1>
-                        </div>
+                        <React.Fragment>
+                          <div className="clue">
+                            <h3>The phrase is</h3>
+                            <h1>{gameData.currentWord}</h1>
+                          </div>
+                          <div className="challenge-button">
+                            <Button
+                              onClick={() =>
+                                this.challengeTheTurn(user.displayName)
+                              }
+                            >
+                              Challenge! (Space button)
+                            </Button>
+                          </div>
+                        </React.Fragment>
                       ) : (
                         <div className="clue">
                           <h3>Guess the phrase!</h3>
@@ -256,6 +302,14 @@ export default class GameBoard extends Component {
               })}
             </div>
           </div>
+
+          {this.props.challengeInProgress && (
+            <ChallengeModal
+              updateGameData={this.props.updateGameData}
+              gameData={this.props.gameData}
+              transitionToNextRound={this.transitionToNextRound}
+            />
+          )}
         </LoggedInLayout>
 
         <TimerWrapper

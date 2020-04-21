@@ -98,3 +98,12 @@
   background-color: var(--color-brand);
   color: var(--color-white);
 }
+
+.game-board .challenge-button .button {
+  background: none;
+}
+
+.game-board .challenge-button .button:hover {
+  background: var(--color-brand);
+  color: white;
+}

@@ -1,0 +1,65 @@
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal {
+  display: block;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  width: 600px;
+  height: auto;
+  margin: 200px auto;
+  background: white;
+  color: var(--color-primary-dark);
+  padding: var(--space-xlarge);
+  overflow: hidden;
+}
+
+.modal .button-group {
+  padding-top: var(--space-xlarge);
+  overflow: hidden;
+}
+
+.modal .button-group .button {
+  position: relative;
+}
+
+.modal .button-group .button:first-child {
+  float: left;
+}
+
+.modal .button-group .button:last-child {
+  float: right;
+}
+
+.vote-note {
+  margin-top: var(--space-small);
+  text-align: center;
+}
+
+.voter-images {
+  width: 100%;
+  text-align: center;
+}
+
+.voter-image {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 100%;
+  margin-left: var(--space-xsmall);
+  margin-right: -10px;
+}
+
+.accepters,
+.rejecters {
+  position: absolute;
+  top: -20px;
+  left: 0;
+}

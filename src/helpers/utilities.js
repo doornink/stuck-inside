@@ -92,3 +92,24 @@ export const getRoundWinner = (gameData) => {
 export const getGameWinner = (gameData) => {
   return gameData.team1.score >= 7 ? 'team1' : 'team2';
 };
+
+export const canUserChallenge = (gameData, user) => {
+  const { betweenRounds, currentTalker, team1, team2 } = gameData;
+
+  const isUserOnTeam1 = team1.players.find((player) => player.uid === user.uid);
+  const isUserOnTeam2 = team2.players.find((player) => player.uid === user.uid);
+  const isUserCurrentTalker = currentTalker.talker.uid === user.uid;
+
+  if (betweenRounds) {
+    return false;
+  } else if (isUserCurrentTalker) {
+    return false;
+  } else if (currentTalker.team === 'team1' && isUserOnTeam2) {
+    return true;
+  } else if (currentTalker.team === 'team2' && isUserOnTeam1) {
+    return true;
+  }
+
+  // can challenge only if the other team is talking
+  return false;
+};
