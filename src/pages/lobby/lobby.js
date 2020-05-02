@@ -17,6 +17,7 @@ export default function Profile() {
   const [writeError, setWriteError] = useState(null);
   const [games, setGames] = useState([]);
 
+  // observe games for changes
   useEffect(() => {
     try {
       db.ref('games').on('value', (snapshot) => {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './timer-wrapper.css';
 
 export default function TimerWrapper(props) {
-  const { timeLeft, timerLength, betweenRounds, challengeInProgress } = props;
+  const { timeLeft, timerLength, timerPaused } = props;
 
   const [stageOnePercentage, setStageOnePercentage] = useState();
   const [stageTwoPercentage, setStageTwoPercentage] = useState();
@@ -18,7 +18,7 @@ export default function TimerWrapper(props) {
   }, [timerLength]);
 
   let stageClass = '';
-  if (timeLeft < 1 || betweenRounds || !!challengeInProgress) {
+  if (timeLeft < 1 || timerPaused) {
     stageClass = '';
   } else if (timeLeft < timerLength * stageFourPercentage) {
     stageClass = 'stage-4';

@@ -49,6 +49,7 @@ export const nextTurn = (gameData) => {
 };
 
 const getTalker = (team, gameData) => {
+  debugger;
   const { currentTurn, team1, team2 } = gameData;
 
   const teamTurn = Math.floor(currentTurn / 2);

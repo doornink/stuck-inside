@@ -106,31 +106,39 @@ export default function Profile() {
           </form>
         )}
 
-        {!showWebcam && (
-          <div className="space">
-            <Button onClick={() => setShowWebcam(true)}>Change my photo</Button>
-          </div>
-        )}
-        {showWebcam && (
+        {displayName && (
           <React.Fragment>
-            <div className="webcam-video-container">
-              <Webcam
-                className="webcam-video"
-                audio={false}
-                height={200}
-                ref={webcamRef}
-                screenshotFormat="image/jpeg"
-                width={360}
-                videoConstraints={videoConstraints}
-              />
+            {!showWebcam && (
+              <div className="space">
+                <Button onClick={() => setShowWebcam(true)}>
+                  Change my photo
+                </Button>
+              </div>
+            )}
+            {showWebcam && (
+              <React.Fragment>
+                <div className="webcam-video-container">
+                  <Webcam
+                    className="webcam-video"
+                    audio={false}
+                    height={200}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    width={360}
+                    videoConstraints={videoConstraints}
+                  />
+                </div>
+                <Button onClick={capture}>Capture photo</Button>
+              </React.Fragment>
+            )}
+
+            <div className="space-large">
+              <Button onClick={() => history.push('/lobby')}>
+                Ready to Play
+              </Button>
             </div>
-            <Button onClick={capture}>Capture photo</Button>
           </React.Fragment>
         )}
-
-        <div className="space-large">
-          <Button onClick={() => history.push('/lobby')}>Ready to Play</Button>
-        </div>
       </div>
     </LoggedInLayout>
   );

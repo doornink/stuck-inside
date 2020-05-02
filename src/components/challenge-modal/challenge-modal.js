@@ -48,23 +48,17 @@ export default function ChallengeModal(props) {
   };
 
   const handleEndChallenge = () => {
-    if (wasChallengeAccepted()) {
-      // if the round ended because of a challenge, the challenging team (non talking)
-      // should get the point, and everything else should transition as normal.
-      props.transitionToNextRound();
-    } else {
-      const updatedGameData = {
-        ...gameData,
-        challengeInProgress: null,
-      };
-
-      updateGameData(updatedGameData);
+    if (props.gameData.betweenRounds) {
+      props.transitionOutOfBetweenRoundChallenge(wasChallengeIgnored());
     }
+    // if the round ended because of a challenge, the challenging team (non talking)
+    // should get the point, and everything else should transition as normal.
+    props.transitionToNextRound(true, wasChallengeIgnored());
   };
 
-  const wasChallengeAccepted = () => {
+  const wasChallengeIgnored = () => {
     return (
-      (challengeData.accepts ? challengeData.accepts.length : 0) >
+      (challengeData.accepts ? challengeData.accepts.length : 0) <=
       (challengeData.ignores ? challengeData.ignores.length : 0)
     );
   };
@@ -151,7 +145,7 @@ export default function ChallengeModal(props) {
           <React.Fragment>
             <h2>
               The challenge has been{' '}
-              {wasChallengeAccepted() ? 'accepted' : 'ignored'}!
+              {wasChallengeIgnored() ? 'ignored' : 'accepted'}!
             </h2>
             <div className="space-large">
               <Button onClick={handleEndChallenge}>Resume Play</Button>

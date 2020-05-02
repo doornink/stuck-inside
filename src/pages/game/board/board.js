@@ -23,6 +23,7 @@ export default class GameBoard extends Component {
     isUserCurrentTalker:
       auth().currentUser.uid === this.props.currentTalker.talker.uid,
     timeLeft: this.props.timerLength,
+    throttleKey: false,
   };
 
   componentWillMount() {
@@ -82,7 +83,10 @@ export default class GameBoard extends Component {
   };
 
   // do all the things to end the round and prep the next round
-  transitionToNextRound = () => {
+  transitionToNextRound = (
+    lastRoundChallenged = false,
+    noPointsAwarded = false
+  ) => {
     const { betweenRounds, gameData, updateGameData } = this.props;
     const newCurrentTurn = gameData.currentTurn + 1;
     const newCurrentRound = gameData.currentRound + 1;
@@ -94,7 +98,12 @@ export default class GameBoard extends Component {
 
     // find out who should get a point
     const roundWinner = getRoundWinner(gameData);
-    const newScore = gameData[roundWinner].score + 1;
+    let newScore = gameData[roundWinner].score + 1;
+    // if there was a challenge that was ignored the round changes with
+    // no points awarded to either team
+    if (noPointsAwarded) {
+      newScore = newScore - 1;
+    }
 
     const updatedGameData = {
       ...gameData,
@@ -110,7 +119,43 @@ export default class GameBoard extends Component {
       },
       status: newScore >= 7 ? GAME_STATUSES.DONE : GAME_STATUSES.IN_PROGRESS,
       wordList: newScore >= 7 ? [] : gameData.wordList,
+      lastRoundChallenged: lastRoundChallenged,
     };
+
+    updateGameData(updatedGameData);
+  };
+
+  transitionOutOfBetweenRoundChallenge = (wasChallengeIgnored) => {
+    const { gameData, updateGameData } = this.props;
+    let updatedGameData;
+    if (!wasChallengeIgnored) {
+      // the current talkers team should lose their point to the other team
+      const pointLoser =
+        gameData.currentTalker.team === 'team1' ? 'team1' : 'team2';
+      const pointGainer =
+        gameData.currentTalker.team === 'team1' ? 'team2' : 'team1';
+
+      updatedGameData = {
+        ...gameData,
+        [pointLoser]: {
+          ...gameData[pointLoser],
+          score: gameData[pointLoser].score - 1,
+        },
+        [pointGainer]: {
+          ...gameData[pointGainer],
+          score: gameData[pointGainer].score + 1,
+        },
+        challengeInProgress: null,
+        lastRoundChallenged: true,
+      };
+    } else {
+      // no change, just end challenge
+      updatedGameData = {
+        ...gameData,
+        challengeInProgress: null,
+        lastRoundChallenged: true,
+      };
+    }
 
     updateGameData(updatedGameData);
   };
@@ -122,25 +167,35 @@ export default class GameBoard extends Component {
       ...gameData,
       timer: setTimer(),
       betweenRounds: false,
+      lastRoundChallenged: false,
     };
 
     updateGameData(updatedGameData);
   };
 
   handleUserKeyPress = (event) => {
-    if (event.keyCode === 32) {
-      if (this.state.isUserCurrentTalker) {
-        this.transitionToNextTurn();
-      } else if (canUserChallenge(this.props.gameData, this.state.user)) {
-        this.challengeTheTurn(this.state.user.displayName);
-      }
-
-      // if on other team, start a challenge
-      // pause timeLeft countdowns on all platforms by setting a pause param in firebase
+    if (this.props.challengeInProgress || this.state.throttleKey) {
+      return false;
     }
+    this.setState({ throttleKey: true });
+
+    if (this.state.isUserCurrentTalker) {
+      if (this.props.gameData.betweenRounds) {
+        // put a delay on this so people can challange and so people don't accidentally start a new round when trying to challenge
+        this.startRound();
+      } else {
+        this.transitionToNextTurn();
+      }
+    } else if (canUserChallenge(this.props.gameData, this.state.user)) {
+      this.challengeTheTurn(this.state.user.displayName);
+    }
+    setTimeout(() => {
+      this.setState({ throttleKey: false });
+    }, 1000);
   };
 
-  challengeTheTurn = (challenger) => {
+  challengeTheTurn = () => {
+    const challenger = this.state.user.displayName;
     const { gameData, updateGameData } = this.props;
 
     const updatedGameData = {
@@ -213,7 +268,7 @@ export default class GameBoard extends Component {
                     <div className="on-the-clock">
                       <h3>You are up! Click below to start the round.</h3>
                       <Button onClick={() => this.startRound()}>
-                        Start Round
+                        Start Round (Hit any key)
                       </Button>
                     </div>
                   ) : (
@@ -230,7 +285,7 @@ export default class GameBoard extends Component {
                         <h1>{gameData.currentWord}</h1>
                       </div>
                       <Button onClick={() => this.transitionToNextTurn()}>
-                        Got it! (Space button)
+                        Got it! (Hit any key)
                       </Button>
                     </React.Fragment>
                   )}
@@ -243,6 +298,11 @@ export default class GameBoard extends Component {
                         Waiting for {gameData.currentTalker.talker.displayName}{' '}
                         to start the next round
                       </h3>
+                      {!gameData.lastRoundChallenged && (
+                        <Button onClick={() => this.challengeTheTurn(true)}>
+                          Challenge previous round
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <React.Fragment>
@@ -260,12 +320,8 @@ export default class GameBoard extends Component {
                             <h1>{gameData.currentWord}</h1>
                           </div>
                           <div className="challenge-button">
-                            <Button
-                              onClick={() =>
-                                this.challengeTheTurn(user.displayName)
-                              }
-                            >
-                              Challenge! (Space button)
+                            <Button onClick={() => this.challengeTheTurn()}>
+                              Challenge! (Hit any key)
                             </Button>
                           </div>
                         </React.Fragment>
@@ -309,6 +365,9 @@ export default class GameBoard extends Component {
               updateGameData={this.props.updateGameData}
               gameData={this.props.gameData}
               transitionToNextRound={this.transitionToNextRound}
+              transitionOutOfBetweenRoundChallenge={
+                this.transitionOutOfBetweenRoundChallenge
+              }
             />
           )}
         </LoggedInLayout>
@@ -316,6 +375,7 @@ export default class GameBoard extends Component {
         <TimerWrapper
           timeLeft={this.state.timeLeft}
           timerLength={this.props.timerLength}
+          timerPaused={gameData.betweenRounds || !!gameData.challengeInProgress}
         />
       </React.Fragment>
     );
