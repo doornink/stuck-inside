@@ -28,13 +28,13 @@ export default function GamePreview({ game, handleJoinGameClick }) {
   );
 
   return (
-    <div className="game-preview">
+    <div key={game.key} className="game-preview">
       <h3>{game.players[0].displayName}’s new game</h3>
       <h5>Created {moment(game.timestamp).fromNow()}</h5>
 
       <div className="players-list">
         {game.players.slice(0, 4).map((player) => {
-          return <PlayerCard size="small" player={player} />;
+          return <PlayerCard key={player.uid} size="small" player={player} />;
         })}
 
         {game.players.length > 4 && (

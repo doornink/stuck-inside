@@ -48,7 +48,7 @@ export default function WaitingRoom({ gameData, updateGameData }) {
           <h3>Waiting to play:</h3>
           <div className="player-list">
             {gameData.players.map((player) => {
-              return <PlayerCard player={player} />;
+              return <PlayerCard key={player.uid} player={player} />;
             })}
           </div>
         </div>

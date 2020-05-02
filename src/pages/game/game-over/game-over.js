@@ -21,7 +21,7 @@ export default function GameOver({ gameData }) {
           {gameData[winningTeam] && (
             <div className="player-list">
               {gameData[winningTeam].players.map((player) => {
-                return <PlayerCard player={player} />;
+                return <PlayerCard key={player.uid} player={player} />;
               })}
             </div>
           )}

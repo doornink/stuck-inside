@@ -250,6 +250,7 @@ export default class GameBoard extends Component {
               {gameData.team1.players.map((player) => {
                 return (
                   <PlayerCard
+                    key={player.uid}
                     player={player}
                     gameData={gameData}
                     highlighted={
@@ -348,6 +349,7 @@ export default class GameBoard extends Component {
               {gameData.team2.players.map((player) => {
                 return (
                   <PlayerCard
+                    key={player.uid}
                     player={player}
                     gameData={gameData}
                     highlighted={
