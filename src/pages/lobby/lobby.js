@@ -35,7 +35,6 @@ export default function Profile() {
 
   // delete any games that are older than 20 minutes and never made it out of the first round
   const cleanGames = (gameList) => {
-    console.log('running!!');
     if (!gameList) {
       return;
     }
