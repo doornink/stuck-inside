@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import './timer-wrapper.css';
 
+import Beep from '../../sounds/sample_beep.mp3';
+
 export default function TimerWrapper(props) {
+  const audio = new Audio(Beep);
   const { timeLeft, timerLength, timerPaused } = props;
 
   const [stageOnePercentage, setStageOnePercentage] = useState();
@@ -22,11 +25,19 @@ export default function TimerWrapper(props) {
     stageClass = '';
   } else if (timeLeft < timerLength * stageFourPercentage) {
     stageClass = 'stage-4';
+    console.log('play audio 4', audio);
+    audio.play();
   } else if (timeLeft < timerLength * stageThreePercentage) {
     stageClass = 'stage-3';
+    console.log('play audio 3', audio);
+    audio.play();
   } else if (timeLeft < timerLength * stageTwoPercentage) {
     stageClass = 'stage-2';
+    console.log('play audio 2', audio);
+    audio.play();
   } else if (timeLeft < timerLength * stageOnePercentage) {
+    console.log('play audio 1', audio);
+    audio.play();
     stageClass = 'stage-1';
   }
 
