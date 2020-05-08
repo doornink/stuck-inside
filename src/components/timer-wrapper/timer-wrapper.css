@@ -20,7 +20,7 @@
 }
 
 .timer-wrapper.stage-4 {
-  animation: blinkingText 0.2s infinite;
+  animation: blinkingText 0.25s infinite;
 }
 
 @keyframes blinkingText {
