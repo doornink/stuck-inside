@@ -94,7 +94,7 @@ export default function ChallengeModal(props) {
                   {challengeData.accepts &&
                     challengeData.accepts.map((player) => {
                       return (
-                        <div className="voter-image">
+                        <div key={player.uid} className="voter-image">
                           {player.photoURL && (
                             <img
                               src={player.photoURL}
@@ -113,7 +113,7 @@ export default function ChallengeModal(props) {
                   {challengeData.ignores &&
                     challengeData.ignores.map((player) => {
                       return (
-                        <div className="voter-image">
+                        <div key={player.uid} className="voter-image">
                           {player.photoURL && (
                             <img
                               src={player.photoURL}
@@ -132,7 +132,7 @@ export default function ChallengeModal(props) {
               {challengeData.unanswered &&
                 challengeData.unanswered.map((player) => {
                   return (
-                    <div className="voter-image">
+                    <div key={player.uid} className="voter-image">
                       {player.photoURL && (
                         <img src={player.photoURL} alt={player.displayName} />
                       )}

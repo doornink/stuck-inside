@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './board.css';
+import Buzzer from '../../../sounds/buzzer.mp3';
+import Ding from '../../../sounds/ding.mp3';
 
 import { auth } from '../../../services/firebase';
 import {
@@ -24,6 +26,8 @@ export default class GameBoard extends Component {
       auth().currentUser.uid === this.props.currentTalker.talker.uid,
     timeLeft: this.props.timerLength,
     throttleKey: false,
+    buzzer: new Audio(Buzzer),
+    ding: new Audio(Ding),
   };
 
   componentWillMount() {
@@ -65,6 +69,12 @@ export default class GameBoard extends Component {
 
     if (this.props.challengeInProgress && !nextProps.challengeInProgress) {
       this.tickTimer(true);
+    }
+
+    if (this.props.currentRound < nextProps.currentRound) {
+      this.state.buzzer.play();
+    } else if (this.props.currentTurn < nextProps.currentTurn) {
+      this.state.ding.cloneNode(true).play();
     }
   }
 
@@ -299,11 +309,14 @@ export default class GameBoard extends Component {
                         Waiting for {gameData.currentTalker.talker.displayName}{' '}
                         to start the next round
                       </h3>
-                      {!gameData.lastRoundChallenged && (
-                        <Button onClick={() => this.challengeTheTurn(true)}>
-                          Challenge previous round
-                        </Button>
-                      )}
+                      {!gameData.lastRoundChallenged &&
+                        gameData.currentRound > 1 && (
+                          <div className="challenge-button">
+                            <Button onClick={() => this.challengeTheTurn(true)}>
+                              Challenge previous round
+                            </Button>
+                          </div>
+                        )}
                     </div>
                   ) : (
                     <React.Fragment>
@@ -377,7 +390,10 @@ export default class GameBoard extends Component {
         <TimerWrapper
           timeLeft={this.state.timeLeft}
           timerLength={this.props.timerLength}
-          timerPaused={gameData.betweenRounds || !!gameData.challengeInProgress}
+          timerStopped={
+            gameData.betweenRounds || !!gameData.challengeInProgress
+          }
+          beep={this.props.beep}
         />
       </React.Fragment>
     );
