@@ -1,0 +1,68 @@
+.game-board.codenames {
+  width: 100%;
+}
+
+.game-board.codenames .-red {
+  color: var(--color-red);
+}
+
+.game-board.codenames .-blue {
+  color: var(--color-blue);
+}
+
+.setup-container h3 {
+  margin-bottom: var(--space);
+}
+
+.card-grid {
+  width: 100%;
+  overflow: hidden;
+  margin-top: var(--space-large);
+  padding: 5px;
+}
+
+.card-grid .card-grid-item {
+  width: calc(20% - 4px);
+  margin: 2px;
+  height: 7vw;
+  float: left;
+  font-size: 1.3vw;
+  font-weight: 600;
+  /* border: 1px solid black; */
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-primary-lightest);
+  line-height: 7vw;
+  color: var(--color-primary-dark);
+}
+
+.card-grid .card-grid-item.-clickable {
+  cursor: pointer;
+}
+
+.card-grid .card-grid-item.-clickable:not(.-flipped):hover {
+  background-color: var(--color-primary-light);
+}
+
+.card-grid .card-grid-item.-red-agent {
+  background: var(--color-red);
+  color: white;
+}
+
+.card-grid .card-grid-item.-blue-agent {
+  background-color: var(--color-blue);
+  color: white;
+}
+
+.card-grid .card-grid-item.-assassin-agent {
+  background-color: black;
+  color: white;
+}
+
+.card-grid .card-grid-item.-neutral-agent {
+  background-color: var(--color-primary-light);
+  color: white;
+}
+
+.card-grid .card-grid-item.-spymaster-view.-flipped {
+  opacity: 0.2;
+}
