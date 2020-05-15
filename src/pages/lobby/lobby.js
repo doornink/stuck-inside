@@ -25,33 +25,13 @@ export default function Profile() {
         snapshot.forEach((game) => {
           games.push({ ...game.val(), key: game.key });
         });
-        cleanGames(games);
+
         setGames(games);
       });
     } catch (error) {
       setReadError(error.message);
     }
   }, []);
-
-  // delete any games that are older than 20 minutes and never made it out of the first round
-  const cleanGames = (gameList) => {
-    if (!gameList) {
-      return;
-    }
-
-    // const deletableGames = gameList.filter((game) => {
-    //   const createdMoreThan20Ago =
-    //     new Date().getTime() - game.timestamp > 1200000;
-    //   const isUnplayed = !game.currentRound || game.currentRound < 2;
-    //   return createdMoreThan20Ago && isUnplayed;
-    // });
-
-    // if (deletableGames.length > 0) {
-    //   deletableGames.forEach((game) => {
-    //     deleteGame(game);
-    //   });
-    // }
-  };
 
   const getPlayerObject = () => {
     return {
