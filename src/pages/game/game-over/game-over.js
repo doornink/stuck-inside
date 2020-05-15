@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import './game-over.css';
 
-import { getGameWinner } from '../../../helpers/utilities';
+import { getGameWinner } from '../../../helpers/utilities/catchphrase-utilities';
 
 import LoggedInLayout from '../../../components/logged-in-layout';
 import PlayerCard from '../../../components/player-card/player-card';

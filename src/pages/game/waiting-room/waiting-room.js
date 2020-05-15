@@ -1,30 +1,50 @@
 import React, { useState } from 'react';
 import './waiting-room.css';
 
-import { GAME_STATUSES } from '../../../helpers/constants';
-import { shufflePlayersIntoTeams } from '../../../helpers/utilities';
+import { GAME_STATUSES, GAME_TYPES } from '../../../helpers/constants';
+import { shufflePlayersIntoTeams } from '../../../helpers/utilities/catchphrase-utilities';
 
-import { shuffleWords, ALL_WORDS } from '../../../helpers/word-lists';
+import {
+  shuffleWords,
+  ALL_WORDS,
+  CODENAMES_ORIGINAL,
+} from '../../../helpers/word-lists';
 import LoggedInLayout from '../../../components/logged-in-layout';
 import Button from '../../../components/button/button';
 import PlayerCard from '../../../components/player-card/player-card';
 
 export default function WaitingRoom({ gameData, updateGameData }) {
   const startGame = () => {
-    const [team1, team2] = shufflePlayersIntoTeams(gameData.players);
-    const wordList = shuffleWords(ALL_WORDS);
-    const updatedGameData = {
-      ...gameData,
-      status: GAME_STATUSES.IN_PROGRESS,
-      team1: { score: 0, players: team1 },
-      team2: { score: 0, players: team2 },
-      currentWord: wordList[0],
-      currentTalker: { team: 'team1', talker: team1[0] },
-      currentTurn: 1,
-      currentRound: 1,
-      betweenRounds: true,
-      wordList,
-    };
+    let updatedGameData;
+    if (gameData.gameType === GAME_TYPES.CODENAMES) {
+      const [red, blue] = shufflePlayersIntoTeams(gameData.players);
+      const wordList = shuffleWords(CODENAMES_ORIGINAL, 25);
+      updatedGameData = {
+        ...gameData,
+        status: GAME_STATUSES.IN_PROGRESS,
+        red: { score: 0, players: red, spymaster: null },
+        blue: { score: 0, players: blue, spymaster: null },
+        currentTurn: 1,
+        currentRound: 1,
+        settingUpGame: true,
+        wordList,
+      };
+    } else if (gameData.gameType === GAME_TYPES.CATCHPHRASE) {
+      const [team1, team2] = shufflePlayersIntoTeams(gameData.players);
+      const wordList = shuffleWords(ALL_WORDS, 300);
+      updatedGameData = {
+        ...gameData,
+        status: GAME_STATUSES.IN_PROGRESS,
+        team1: { score: 0, players: team1 },
+        team2: { score: 0, players: team2 },
+        currentWord: wordList[0],
+        currentTalker: { team: 'team1', talker: team1[0] },
+        currentTurn: 1,
+        currentRound: 1,
+        betweenRounds: true,
+        wordList,
+      };
+    }
 
     updateGameData(updatedGameData);
   };
@@ -42,7 +62,7 @@ export default function WaitingRoom({ gameData, updateGameData }) {
   const canStartGame = gameData.players.length >= 4;
 
   return (
-    <LoggedInLayout title="New Game">
+    <LoggedInLayout title={gameData.gameType}>
       <div className="waiting-room">
         <div className="space-large">
           <h3>Waiting to play:</h3>

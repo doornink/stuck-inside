@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import './score.css';
 
-export default function Score({ score }) {
+export default function Score({ score, color }) {
   const [animatingScore, setAnimatingScore] = useState(false);
   const [prevScore, setPrevScore] = useState(score);
 
@@ -19,7 +19,11 @@ export default function Score({ score }) {
   }, [prevScore, score]);
 
   return (
-    <div className={`team-score ${animatingScore ? 'animating' : ''}`}>
+    <div
+      className={`team-score ${animatingScore ? 'animating' : ''} ${
+        color ? `-${color}` : ''
+      }`}
+    >
       <div className="main-score">{score}</div>
       {animatingScore && (
         <React.Fragment>

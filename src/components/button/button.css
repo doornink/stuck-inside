@@ -25,3 +25,25 @@ button.button:disabled:hover {
   color: var(--color-primary-light);
   background-color: white;
 }
+
+button.button[data-color='red'] {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+button.button[data-color='red']:hover {
+  border-color: white;
+  color: white;
+  background-color: var(--color-red);
+}
+
+button.button[data-color='blue'] {
+  color: var(--color-blue);
+  border-color: var(--color-blue);
+}
+
+button.button[data-color='blue']:hover {
+  border-color: white;
+  color: white;
+  background-color: var(--color-blue);
+}

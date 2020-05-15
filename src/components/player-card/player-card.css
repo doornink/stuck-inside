@@ -47,6 +47,11 @@
   color: var(--color-brand);
 }
 
+.codenames .player-card.highlighted {
+  background: var(--color-primary-dark);
+  color: var(--color-primary-lightest);
+}
+
 .player-card .name {
   height: 40px;
   width: calc(100% - 40px);

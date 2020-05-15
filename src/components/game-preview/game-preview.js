@@ -29,8 +29,11 @@ export default function GamePreview({ game, handleJoinGameClick }) {
 
   return (
     <div key={game.key} className="game-preview">
-      <h3>{game.players[0].displayName}’s new game</h3>
-      <h5>Created {moment(game.timestamp).fromNow()}</h5>
+      <h2>{game.gameType}</h2>
+      <h5>
+        Created {moment(game.timestamp).fromNow()} by{' '}
+        {game.players[0].displayName}
+      </h5>
 
       <div className="players-list">
         {game.players.slice(0, 4).map((player) => {

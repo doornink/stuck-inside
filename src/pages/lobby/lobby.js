@@ -4,7 +4,7 @@ import './lobby.css';
 
 import { auth, db } from '../../services/firebase';
 
-import { GAME_STATUSES } from '../../helpers/constants';
+import { GAME_STATUSES, GAME_TYPES } from '../../helpers/constants';
 
 import GamePreview from '../../components/game-preview/game-preview';
 import LoggedInLayout from '../../components/logged-in-layout';
@@ -39,18 +39,18 @@ export default function Profile() {
       return;
     }
 
-    const deletableGames = gameList.filter((game) => {
-      const createdMoreThan20Ago =
-        new Date().getTime() - game.timestamp > 1200000;
-      const isUnplayed = !game.currentRound || game.currentRound < 2;
-      return createdMoreThan20Ago && isUnplayed;
-    });
+    // const deletableGames = gameList.filter((game) => {
+    //   const createdMoreThan20Ago =
+    //     new Date().getTime() - game.timestamp > 1200000;
+    //   const isUnplayed = !game.currentRound || game.currentRound < 2;
+    //   return createdMoreThan20Ago && isUnplayed;
+    // });
 
-    if (deletableGames.length > 0) {
-      deletableGames.forEach((game) => {
-        deleteGame(game);
-      });
-    }
+    // if (deletableGames.length > 0) {
+    //   deletableGames.forEach((game) => {
+    //     deleteGame(game);
+    //   });
+    // }
   };
 
   const getPlayerObject = () => {
@@ -61,7 +61,7 @@ export default function Profile() {
     };
   };
 
-  const createNewGame = async () => {
+  const createNewGame = async (gameType) => {
     setWriteError(null);
     var newGameKey = db.ref('games').push().key;
 
@@ -70,6 +70,7 @@ export default function Profile() {
         players: [getPlayerObject()],
         timestamp: Date.now(),
         status: GAME_STATUSES.WAITING_TO_START,
+        gameType,
       });
     } catch (error) {
       setWriteError(error.message);
@@ -117,7 +118,12 @@ export default function Profile() {
     <LoggedInLayout title="Lobby" error={readError || writeError}>
       <div className="lobby">
         <div className="lobby-top">
-          <Button onClick={() => createNewGame()}>New Game</Button>
+          <Button onClick={() => createNewGame(GAME_TYPES.CATCHPHRASE)}>
+            New {GAME_TYPES.CATCHPHRASE} Game
+          </Button>
+          <Button onClick={() => createNewGame(GAME_TYPES.CODENAMES)}>
+            New {GAME_TYPES.CODENAMES} Game
+          </Button>
         </div>
         {gamesWaitingToStart.length > 0 && (
           <div className="games-list starting-games">

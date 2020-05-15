@@ -1,3 +1,9 @@
+.lobby {
+  max-width: 1000px;
+  min-width: 640px;
+  margin: 0 auto;
+}
+
 .lobby-top {
   width: 100%;
   text-align: center;
@@ -13,6 +19,6 @@
   overflow: hidden;
 }
 
-.lobby .games-list h2 {
+.lobby .games-list > h2 {
   margin-left: var(--space-small);
 }

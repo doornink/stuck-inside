@@ -88,6 +88,7 @@ export default class TimerWrapper extends Component {
 
   audioTick = () => {
     if (!this.props.timerStopped) {
+      this.state.beep.volume = 0.1;
       this.state.beep.play();
       this.tickTimeout = setTimeout(() => {
         this.audioTick();

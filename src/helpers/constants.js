@@ -4,3 +4,8 @@ export const GAME_STATUSES = {
   DONE: 'DONE',
   CLOSED: 'CLOSED',
 };
+
+export const GAME_TYPES = {
+  CATCHPHRASE: 'Catchphrase',
+  CODENAMES: 'Codenames',
+};

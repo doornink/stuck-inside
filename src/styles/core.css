@@ -37,6 +37,9 @@
   --color-border: var(--color-primary-darkest);
   --color-border-dark-theme: var(--color-cloudy);
 
+  --color-blue: var(--ds-blue);
+  --color-red: var(--ds-orion-highlight);
+
   --space: 16px;
   --space-xsmall: 4px;
   --space-small: 8px;
