@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import '../board/board.css';
 import './catchphrase.css';
-import Buzzer from '../../../sounds/buzzer.mp3';
-import Ding from '../../../sounds/ding.mp3';
 
 import { auth } from '../../../services/firebase';
 import {
@@ -19,6 +17,10 @@ import Button from '../../../components/button/button';
 import TimerWrapper from '../../../components/timer-wrapper/timer-wrapper';
 import ChallengeModal from '../../../components/challenge-modal/challenge-modal';
 import Score from '../../../components/score/score';
+import {
+  AudioEngine,
+  SOUNDS,
+} from '../../../components/audioEngine/audioEngine';
 
 export default class Catchphrase extends Component {
   state = {
@@ -27,8 +29,6 @@ export default class Catchphrase extends Component {
       auth().currentUser.uid === this.props.currentTalker.talker.uid,
     timeLeft: this.props.timerLength,
     throttleKey: false,
-    buzzer: new Audio(Buzzer),
-    ding: new Audio(Ding),
   };
 
   componentWillMount() {
@@ -73,13 +73,17 @@ export default class Catchphrase extends Component {
     }
 
     if (this.props.currentRound < nextProps.currentRound) {
-      this.state.buzzer.volume = 0.1;
-      this.state.buzzer.play();
+      this.playSound(SOUNDS.BUZZER);
     } else if (this.props.currentTurn < nextProps.currentTurn) {
-      this.state.ding.cloneNode(true).volume = 0.1;
-      this.state.ding.play();
+      this.playSound(SOUNDS.DING);
     }
   }
+
+  playSound = (sound) => {
+    this.setState({ sound }, () => {
+      this.setState({ sound: null });
+    });
+  };
 
   transitionToNextTurn = () => {
     const { gameData, updateGameData } = this.props;
@@ -187,24 +191,26 @@ export default class Catchphrase extends Component {
   };
 
   handleUserKeyPress = (event) => {
-    if (this.props.challengeInProgress || this.state.throttleKey) {
-      return false;
-    }
-    this.setState({ throttleKey: true });
-
-    if (this.state.isUserCurrentTalker) {
-      if (this.props.gameData.betweenRounds) {
-        // put a delay on this so people can challange and so people don't accidentally start a new round when trying to challenge
-        this.startRound();
-      } else {
-        this.transitionToNextTurn();
+    if (event.keyCode === 32) {
+      if (this.props.challengeInProgress || this.state.throttleKey) {
+        return false;
       }
-    } else if (canUserChallenge(this.props.gameData, this.state.user)) {
-      this.challengeTheTurn(this.state.user.displayName);
+      this.setState({ throttleKey: true });
+
+      if (this.state.isUserCurrentTalker) {
+        if (this.props.gameData.betweenRounds) {
+          // put a delay on this so people can challange and so people don't accidentally start a new round when trying to challenge
+          this.startRound();
+        } else {
+          this.transitionToNextTurn();
+        }
+      } else if (canUserChallenge(this.props.gameData, this.state.user)) {
+        this.challengeTheTurn(this.state.user.displayName);
+      }
+      setTimeout(() => {
+        this.setState({ throttleKey: false });
+      }, 1000);
     }
-    setTimeout(() => {
-      this.setState({ throttleKey: false });
-    }, 1000);
   };
 
   challengeTheTurn = () => {
@@ -247,11 +253,13 @@ export default class Catchphrase extends Component {
     const showTheClue = shouldShowClue(gameData, user);
 
     return (
-      <React.Fragment>
+      <div className="catchphrase-board">
         <LoggedInLayout
           error={this.props.error}
           colorTheme={isUserCurrentTalker ? 'green' : 'dark'}
+          logoTitle="Catchphrase!"
         >
+          <AudioEngine sound={this.state.sound} />
           <div
             className={`catchphrase game-board ${
               isUserCurrentTalker ? 'current-turn' : ''
@@ -282,7 +290,7 @@ export default class Catchphrase extends Component {
                     <div className="on-the-clock">
                       <h3>You are up! Click below to start the round.</h3>
                       <Button onClick={() => this.startRound()}>
-                        Start Round (Hit any key)
+                        Start Round (Hit Space Bar)
                       </Button>
                     </div>
                   ) : (
@@ -299,7 +307,7 @@ export default class Catchphrase extends Component {
                         <h1>{gameData.currentWord}</h1>
                       </div>
                       <Button onClick={() => this.transitionToNextTurn()}>
-                        Got it! (Hit any key)
+                        Got it! (Hit Space Bar)
                       </Button>
                     </React.Fragment>
                   )}
@@ -338,7 +346,7 @@ export default class Catchphrase extends Component {
                           </div>
                           <div className="challenge-button">
                             <Button onClick={() => this.challengeTheTurn()}>
-                              Challenge! (Hit any key)
+                              Challenge! (Hit Space Bar)
                             </Button>
                           </div>
                         </React.Fragment>
@@ -397,8 +405,9 @@ export default class Catchphrase extends Component {
             gameData.betweenRounds || !!gameData.challengeInProgress
           }
           beep={this.props.beep}
+          playSound={this.playSound}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }

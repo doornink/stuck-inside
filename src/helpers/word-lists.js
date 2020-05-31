@@ -1150,11 +1150,5 @@ export const shuffleWords = (wordArray, numberOfWords) => {
     wordArray[j] = temp;
   }
 
-  // since games only go until a team reaches 7 points, we don't need more than 13 rounds worth of words stored in the db
-  // 13 rounds
-  // 75 seconds max
-  // 15 words a round (5 seconds a word on long rounds worst case scenario)
-  // 13 * 15 = 195 + 105 overcompensation words (they get cleared at the end of a game)
-  // I need more words, like 100X more
   return wordArray.slice(0, numberOfWords);
 };

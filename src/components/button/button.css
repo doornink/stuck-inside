@@ -7,6 +7,7 @@ button.button {
   background: white;
   font-size: var(--font-size-medium);
   font-weight: 600;
+  max-width: 500px;
 }
 
 button.button:hover {

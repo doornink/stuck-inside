@@ -7,6 +7,9 @@
   max-width: 1400px;
   margin: 0 auto;
 }
+.catchphrase-board .main {
+  max-width: none;
+}
 
 .main.dark-theme {
   background-color: var(--color-bg-dark-theme);
@@ -47,7 +50,8 @@ header .logo {
   padding-left: var(--space);
 }
 
-.main.green-theme header .logo {
+.main.green-theme header .logo,
+.main.dark-theme header .logo {
   color: white;
 }
 

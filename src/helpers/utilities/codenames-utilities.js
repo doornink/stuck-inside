@@ -11,11 +11,23 @@ export const isUserOnBlueTeam = (gameData, user) => {
 };
 
 export const getUsersTeamName = (gameData, user) => {
-  const { red } = gameData;
+  const { red, blue } = gameData;
 
-  return !!red.players.find((player) => player.uid === user.uid)
-    ? 'red'
-    : 'blue';
+  if (!!red.players.find((player) => player.uid === user.uid)) {
+    return 'red';
+  }
+  if (!!blue.players.find((player) => player.uid === user.uid)) {
+    return 'blue';
+  }
+  return null;
+};
+
+export const getTeamScore = (gameData, team) => {
+  return gameData.gridData
+    ? gameData.gridData.filter(
+        (card) => card.agentType === team && card.flipped
+      ).length
+    : 0;
 };
 
 export const isUserSpymaster = (gameData, user) => {
@@ -107,4 +119,22 @@ export const isThereAWinner = (gameData) => {
   }
 
   return false;
+};
+
+export const getGameOutcome = (gameData) => {
+  const { winner } = gameData;
+
+  const assassinCard = gameData.gridData.find(
+    (card) => card.agentType === 'assassin'
+  );
+
+  if (assassinCard.flipped) {
+    return `The ${winner === 'red' ? 'Blue' : 'Red'} Team chose ${
+      assassinCard.word
+    }, which was the Assassin Card. Better luck next time.`;
+  } else {
+    return `The ${
+      winner === 'red' ? 'Blue' : 'Red'
+    } Team found all their words. Outstanding!`;
+  }
 };

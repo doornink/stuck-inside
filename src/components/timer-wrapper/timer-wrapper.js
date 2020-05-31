@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './timer-wrapper.css';
 
 import Beep from '../../sounds/sample_beep.mp3';
+import { SOUNDS } from '../audioEngine/audioEngine';
 
 export default class TimerWrapper extends Component {
   state = {
@@ -23,8 +24,6 @@ export default class TimerWrapper extends Component {
   }
 
   componentWillUnmount() {
-    console.log('bye bye!');
-    this.state.beep.pause();
     clearTimeout(this.tickTimeout);
   }
 
@@ -88,8 +87,7 @@ export default class TimerWrapper extends Component {
 
   audioTick = () => {
     if (!this.props.timerStopped) {
-      this.state.beep.volume = 0.1;
-      this.state.beep.play();
+      this.props.playSound(SOUNDS.BEEP);
       this.tickTimeout = setTimeout(() => {
         this.audioTick();
       }, this.state.tickFrequency);

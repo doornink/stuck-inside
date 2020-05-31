@@ -10,7 +10,7 @@
 }
 
 .lobby-top button {
-  margin-top: var(--space);
+  margin: var(--space);
 }
 
 .lobby .games-list {

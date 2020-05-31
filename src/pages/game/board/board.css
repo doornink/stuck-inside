@@ -4,13 +4,14 @@
 
 .game-board .team-1,
 .game-board .team-2 {
-  width: 30%;
+  width: 240px;
   float: left;
   padding: 20px;
 }
 
 .game-board .board-main {
-  width: 40%;
+  width: calc(100% - 480px);
+  padding: 0 10px;
   float: left;
   text-align: center;
 }
@@ -30,6 +31,15 @@
 }
 
 .game-board .team-2 .team-score {
+  float: right;
+}
+
+.game-board .needs-score {
+  width: 200px;
+  text-align: center;
+}
+
+.game-board .team-2 .needs-score {
   float: right;
 }
 

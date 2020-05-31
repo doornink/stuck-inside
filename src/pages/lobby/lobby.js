@@ -25,13 +25,37 @@ export default function Profile() {
         snapshot.forEach((game) => {
           games.push({ ...game.val(), key: game.key });
         });
-
+        // cleanGames(games);
         setGames(games);
       });
     } catch (error) {
       setReadError(error.message);
     }
   }, []);
+
+  // delete any games that are older than 20 minutes and never made it out of the first round
+  // const cleanGames = (gameList) => {
+  //   if (!gameList) {
+  //     return;
+  //   }
+
+  //   // TODO - instead of deleting games in these use cases, just filter them out when displaying them
+  //   // if we ever got to the point where we had 100s of games a day then it would make sense to
+  //   // delete them
+
+  //   const deletableGames = gameList.filter((game) => {
+  //     const createdMoreThan20Ago =
+  //       new Date().getTime() - game.timestamp > 1200000;
+  //     const isUnplayed = !game.currentRound || game.currentRound < 2;
+  //     return createdMoreThan20Ago && isUnplayed;
+  //   });
+
+  //   if (deletableGames.length > 0) {
+  //     deletableGames.forEach((game) => {
+  //       deleteGame(game);
+  //     });
+  //   }
+  // };
 
   const getPlayerObject = () => {
     return {
@@ -59,14 +83,14 @@ export default function Profile() {
     }
   };
 
-  const deleteGame = async (game) => {
-    setWriteError(null);
-    try {
-      await db.ref(`/games/${game.key}`).remove();
-    } catch (error) {
-      setWriteError(error.message);
-    }
-  };
+  // const deleteGame = async (game) => {
+  //   setWriteError(null);
+  //   try {
+  //     await db.ref(`/games/${game.key}`).remove();
+  //   } catch (error) {
+  //     setWriteError(error.message);
+  //   }
+  // };
 
   const onJoinGameClick = async (game) => {
     setWriteError(null);
@@ -86,16 +110,24 @@ export default function Profile() {
     history.push(`/game/${game.key}`);
   };
 
+  const olderThan3hours = (timestamp) => {
+    return new Date().getTime() - timestamp > 1000 * 60 * 60 * 3;
+  };
+
   const gamesWaitingToStart = games.filter(
-    (game) => game.status === GAME_STATUSES.WAITING_TO_START
+    (game) =>
+      game.status === GAME_STATUSES.WAITING_TO_START &&
+      !olderThan3hours(game.timestamp)
   );
 
   const gamesInProgress = games.filter(
-    (game) => game.status === GAME_STATUSES.IN_PROGRESS
+    (game) =>
+      game.status === GAME_STATUSES.IN_PROGRESS &&
+      !olderThan3hours(game.timestamp)
   );
 
   return (
-    <LoggedInLayout title="Lobby" error={readError || writeError}>
+    <LoggedInLayout title="Game Lobby" error={readError || writeError}>
       <div className="lobby">
         <div className="lobby-top">
           <Button onClick={() => createNewGame(GAME_TYPES.CATCHPHRASE)}>

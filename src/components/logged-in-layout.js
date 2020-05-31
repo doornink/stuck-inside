@@ -10,6 +10,7 @@ export default function LoggedInLayout({
   title,
   showAlternateColors,
   colorTheme,
+  logoTitle,
 }) {
   const user = auth().currentUser;
   const history = useHistory();
@@ -29,7 +30,7 @@ export default function LoggedInLayout({
       }`}
     >
       <header>
-        <Logo />
+        <Logo title={logoTitle} />
         <div className="username">
           <PlayerCard
             onClick={handleProfileClick}

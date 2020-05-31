@@ -15,6 +15,7 @@ import PlayerCard from '../../../components/player-card/player-card';
 
 export default function WaitingRoom({ gameData, updateGameData }) {
   const startGame = () => {
+    console.log(gameData);
     let updatedGameData;
     if (gameData.gameType === GAME_TYPES.CODENAMES) {
       const [red, blue] = shufflePlayersIntoTeams(gameData.players);
@@ -31,6 +32,9 @@ export default function WaitingRoom({ gameData, updateGameData }) {
       };
     } else if (gameData.gameType === GAME_TYPES.CATCHPHRASE) {
       const [team1, team2] = shufflePlayersIntoTeams(gameData.players);
+      // since games only go until a team reaches 7 points, we don't need more than 13 rounds worth of words stored in the db
+      // 13 rounds, 75 seconds max, 15 words a round (5 seconds a word on long rounds worst case scenario)
+      // 13 * 15 = 195 + 105 overcompensation words (they get cleared at the end of a game) = 300
       const wordList = shuffleWords(ALL_WORDS, 300);
       updatedGameData = {
         ...gameData,

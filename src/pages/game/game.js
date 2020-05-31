@@ -68,7 +68,8 @@ export default function Game() {
               />
             )}
 
-          {gameData.status === GAME_STATUSES.IN_PROGRESS &&
+          {(gameData.status === GAME_STATUSES.IN_PROGRESS ||
+            gameData.status === GAME_STATUSES.DONE) &&
             gameData.gameType === GAME_TYPES.CODENAMES && (
               <Codenames
                 error={readError || writeError}
@@ -77,9 +78,10 @@ export default function Game() {
               />
             )}
 
-          {gameData.status === GAME_STATUSES.DONE && (
-            <GameOver gameData={gameData} />
-          )}
+          {gameData.status === GAME_STATUSES.DONE &&
+            gameData.gameType !== GAME_TYPES.CODENAMES && (
+              <GameOver gameData={gameData} />
+            )}
 
           {gameData.status === GAME_STATUSES.CLOSED && (
             <div>{gameData.status}</div>
