@@ -510,7 +510,6 @@ export const CHRIS_RANDOM_WORDS = [
   'Pull yourself together',
   'So far so good',
   'Speak of the devil',
-  'refractory period',
   'worldwide',
   'Time flies',
   'Under the weather',
@@ -539,12 +538,8 @@ export const CHRIS_RANDOM_WORDS = [
   'hockey puck',
   'basketball hoop',
   'hoola hoop',
-  'white men cant jump',
   'cannonball',
   'godzilla',
-  'salt n peppa',
-  'lebron james',
-  'kobe bryant',
   'cow pie',
   'shepherds pie',
   'pie chart',
@@ -558,8 +553,6 @@ export const CHRIS_RANDOM_WORDS = [
   'shrimp pot',
   'barbeque chicken',
   'cheeseburger',
-  'gin and tonic',
-  'eminem',
   'space needle',
   'full body workout',
   'yoga',
@@ -575,13 +568,10 @@ export const CHRIS_RANDOM_WORDS = [
   'to kill a mockingbird',
   'black panther',
   'holy cow',
-  'did i do that',
   'goldilocks',
   'luke skywalker',
   'walking on sunshine',
   'until death',
-  'fast & furious',
-  'guardians of the galaxy',
 ];
 
 export const PEOPLE = [
@@ -1134,11 +1124,10 @@ export const CODENAMES_UNDERCOVER = [];
 
 export const CODENAMES_DUET = [];
 
+// removed the PEOPLE words
 export const ALL_WORDS = EASY_WORDS.concat(
   MEDIUM_WORDS.concat(
-    HARD_WORDS.concat(
-      CHRIS_RANDOM_WORDS.concat(PEOPLE.concat(CODENAMES_ORIGINAL))
-    )
+    HARD_WORDS.concat(CHRIS_RANDOM_WORDS.concat(CODENAMES_ORIGINAL))
   )
 );
 

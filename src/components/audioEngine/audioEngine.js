@@ -13,11 +13,11 @@ export const SOUNDS = {
 export class AudioEngine extends Component {
   componentWillMount() {
     this.beep = new Audio(Beep);
-    this.beep.volume = 0.3;
+    this.beep.volume = 0.2;
     this.ding = new Audio(Ding);
-    this.ding.volume = 0.3;
+    this.ding.volume = 0.2;
     this.buzzer = new Audio(Buzzer);
-    this.buzzer.volume = 0.3;
+    this.buzzer.volume = 0.2;
     this.lockedAudio = [this.beep, this.ding, this.buzzer];
 
     document.addEventListener('click', this.initAudio, false);

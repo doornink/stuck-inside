@@ -134,7 +134,7 @@ export const getGameOutcome = (gameData) => {
     }, which was the Assassin Card. Better luck next time.`;
   } else {
     return `The ${
-      winner === 'red' ? 'Blue' : 'Red'
+      winner === 'red' ? 'Red' : 'Blue'
     } Team found all their words. Outstanding!`;
   }
 };
